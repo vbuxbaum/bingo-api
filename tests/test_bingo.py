@@ -36,7 +36,6 @@ def test_get_card_invalid_type():
 def test_get_card_unique_values():
     response = client.get("/card")
     assert response.status_code == 200
-    assert response.json()["card_type"] == "jk_classic"
     card_values = set()
     for columns in response.json()["card_columns"]:
         for value in columns:
@@ -48,7 +47,6 @@ def test_get_card_unique_values():
 def test_get_card_wild_card():
     response = client.get("/card")
     assert response.status_code == 200
-    assert response.json()["card_type"] == "jk_classic"
     card_columns = response.json()["card_columns"]
 
     assert card_columns[len(card_columns) // 2][len(card_columns) // 2] is None
