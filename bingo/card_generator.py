@@ -9,7 +9,7 @@ def generate_card():
 
 
 def get_card_columns():
-    return [random.sample(range(1, 15), 5) for _ in range(5)]
+    return [random.sample(range(i, 15 + i), 5) for i in range(1, 75, 15)]
 
 
 def get_card_type():
