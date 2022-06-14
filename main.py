@@ -13,7 +13,7 @@ async def home():
 
 @app.get("/card")
 async def get_card(card_type: str = Query(default="jk_classic")):
-    """Provides values for a basic Bingo card"""
+    """Provides values for a Bingo card of specified type"""
 
     card_generator = get_card_type_generator(card_type)
 
