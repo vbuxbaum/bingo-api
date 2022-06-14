@@ -20,10 +20,17 @@ def test_get_default_card():
     assert len(response.json()["card_columns"]) == 5
 
 
-def test_get_card_any_type():
-    response = client.get("/card?card_type=teste")
+def test_get_card_valid_type():
+    response = client.get("/card?card_type=jk_classic")
     assert response.status_code == 200
-    assert response.json()["card_type"] == "teste"
+    assert response.json()["card_type"] == "jk_classic"
+
+
+def test_get_card_invalid_type():
+    response = client.get("/card?card_type=invalid_type")
+    assert response.status_code == 404
+    err_msg = response.json()["detail"]
+    assert err_msg == "The 'invalid_type' card type is unknown."
 
 
 def test_get_card_unique_values():
