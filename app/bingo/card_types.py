@@ -1,4 +1,4 @@
-from bingo.card_generator import JKClassicGenerator
+from .card_generator import JKClassicGenerator
 
 CARD_TYPES_MAP = {"jk_classic": JKClassicGenerator}
 

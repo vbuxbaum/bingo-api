@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Query, HTTPException
 
-from bingo.card_types import get_card_type_generator
+from .bingo.card_types import get_card_type_generator
 
 app = FastAPI()
 

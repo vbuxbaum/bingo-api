@@ -1,6 +1,6 @@
 from fastapi.testclient import TestClient
 import pytest
-from main import app
+from app.main import app
 
 
 @pytest.fixture
@@ -12,7 +12,8 @@ def test_home(client):
     res = client.get("/")
     assert res.status_code == 200
     assert (
-        "Let's play! Visit /card for a random card." in res.json()["message"]
+        "Let's play! Visit route /card for a random card."
+        in res.json()["message"]
     )
 
 
