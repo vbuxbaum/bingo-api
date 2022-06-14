@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 
+from bingo.card_generator import generate_card
+
 app = FastAPI()
 
 
@@ -10,7 +12,4 @@ async def home():
 
 @app.get("/card")
 async def get_card():
-    return {
-        "card_type": "jk_classic",
-        "card_columns": [[1, 5, 3, 7, 9], [1, 5, 3, 7, 9], [1, 5, 3, 7, 9]],
-    }
+    return generate_card()
