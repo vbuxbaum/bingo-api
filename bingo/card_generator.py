@@ -7,15 +7,18 @@ class CardGenerator(ABC):
     @classmethod
     @abstractmethod
     def generate_card(cls):
+        """Returns a dictionary with elementary card data"""
         pass
 
     @classmethod
     def add_wildcard(cls, card_columns: list[list]) -> None:
+        """Adds 'None' to the center value"""
         center_lenght = len(card_columns) // 2
         card_columns[center_lenght][center_lenght] = None
 
     @classmethod
-    def get_card_hash(cls, card_type: str, card_columns: list[list]) -> None:
+    def get_card_hash(cls, card_type: str, card_columns: list[list]) -> str:
+        """Returns a unique hash string for the card"""
         flatten_columns = [str(value) for col in card_columns for value in col]
         flatten_columns.sort()
 
