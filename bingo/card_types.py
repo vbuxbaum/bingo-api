@@ -1,6 +1,6 @@
-from bingo.card_generator import generate_card
+from bingo.card_generator import JKClassicGenerator
 
-CARD_TYPES_MAP = {"jk_classic": generate_card}
+CARD_TYPES_MAP = {"jk_classic": JKClassicGenerator}
 
 
 def get_card_type_generator(type_identifyer):

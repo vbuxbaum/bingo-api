@@ -22,4 +22,4 @@ async def get_card(card_type: str = Query(default="jk_classic")):
             status_code=404, detail=f"The '{card_type}' card type is unknown."
         )
 
-    return card_generator(card_type=card_type)
+    return card_generator.generate_card(card_type=card_type)
