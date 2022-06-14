@@ -7,9 +7,11 @@ app = FastAPI()
 
 @app.get("/")
 async def home():
-    return {"message": "Hello World"}
+    """Welcome message to the API"""
+    return {"message": "Let's play! Visit /card for a random card."}
 
 
 @app.get("/card")
 async def get_card():
+    """Provides values for a basic Bingo card"""
     return generate_card()

@@ -9,13 +9,16 @@ def generate_card():
 
 
 def get_card_columns():
-    raw_card = [random.sample(range(i, 15 + i), 5) for i in range(1, 75, 15)]
-    add_wildcard(raw_card)
-    return raw_card
+    card_columns = [
+        random.sample(range(i, 15 + i), 5) for i in range(1, 75, 15)
+    ]
+    add_wildcard(card_columns)
+    return card_columns
 
 
-def add_wildcard(raw_card):
-    raw_card[len(raw_card) // 2][len(raw_card) // 2] = None
+def add_wildcard(card_columns):
+    center_lenght = len(card_columns) // 2
+    card_columns[center_lenght][center_lenght] = None
 
 
 def get_card_type():

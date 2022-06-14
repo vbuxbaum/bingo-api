@@ -6,9 +6,11 @@ client = TestClient(app)
 
 
 def test_home():
-    response = client.get("/")
-    assert response.status_code == 200
-    assert response.json() == {"message": "Hello World"}
+    res = client.get("/")
+    assert res.status_code == 200
+    assert (
+        "Let's play! Visit /card for a random card." in res.json()["message"]
+    )
 
 
 def test_get_card():
