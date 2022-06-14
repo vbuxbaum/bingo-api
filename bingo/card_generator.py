@@ -1,9 +1,9 @@
 import random
 
 
-def generate_card():
+def generate_card(card_type="jk_classic"):
     return {
-        "card_type": get_card_type(),
+        "card_type": card_type,
         "card_columns": get_card_columns(),
     }
 
@@ -19,7 +19,3 @@ def get_card_columns():
 def add_wildcard(card_columns):
     center_lenght = len(card_columns) // 2
     card_columns[center_lenght][center_lenght] = None
-
-
-def get_card_type():
-    return "jk_classic"

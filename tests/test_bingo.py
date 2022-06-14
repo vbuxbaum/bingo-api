@@ -13,11 +13,17 @@ def test_home():
     )
 
 
-def test_get_card():
+def test_get_default_card():
     response = client.get("/card")
     assert response.status_code == 200
     assert response.json()["card_type"] == "jk_classic"
     assert len(response.json()["card_columns"]) == 5
+
+
+def test_get_card_any_type():
+    response = client.get("/card?card_type=teste")
+    assert response.status_code == 200
+    assert response.json()["card_type"] == "teste"
 
 
 def test_get_card_unique_values():
