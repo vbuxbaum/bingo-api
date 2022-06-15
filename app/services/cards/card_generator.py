@@ -11,13 +11,13 @@ class CardGenerator(ABC):
         pass
 
     @classmethod
-    def add_wildcard(cls, card_columns: list[list]) -> None:
+    def add_wildcard(cls, card_columns: [[]]) -> None:
         """Adds 'None' to the center value"""
         center_lenght = len(card_columns) // 2
         card_columns[center_lenght][center_lenght] = None
 
     @classmethod
-    def get_card_hash(cls, card_type: str, card_columns: list[list]) -> str:
+    def get_card_hash(cls, card_type: str, card_columns: [[]]) -> str:
         """Returns a unique hash string for the card"""
         flatten_columns = [str(value) for col in card_columns for value in col]
         flatten_columns.sort()
@@ -38,9 +38,28 @@ class JKClassicGenerator(CardGenerator):
         }
 
     @classmethod
-    def get_card_columns(cls) -> list[list]:
+    def get_card_columns(cls) -> [[]]:
         card_columns = [
             random.sample(range(i, 15 + i), 5) for i in range(1, 75, 15)
         ]
         cls.add_wildcard(card_columns)
+        return card_columns
+
+class JKNGenerator(CardGenerator):
+    @classmethod
+    def generate_card(cls, card_type: str, n : int) -> dict:
+        card_columns = cls.get_card_columns(n)
+        return {
+            "card_type": card_type,
+            "card_hash": cls.get_card_hash(card_type, card_columns),
+            "card_columns": card_columns,
+        }
+
+    @classmethod
+    def get_card_columns(cls, column_number: int) -> [[]]:
+        linearity = (column_number*3)
+        card_columns = [
+            random.sample(range(i, linearity + i), column_number) for i in range(1, column_number*linearity, linearity)
+        ]
+        if column_number%2!=0: cls.add_wildcard(card_columns)
         return card_columns

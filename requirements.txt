@@ -37,3 +37,10 @@ uvicorn==0.17.6
 uvloop==0.16.0
 watchgod==0.8.2
 websockets==10.3
+
+uvicorn==0.17.6
+asgiref==3.5.2
+anyio==3.6.1
+fastapi==0.78.0
+pydantic==1.9.1
+starlette==0.19.1
