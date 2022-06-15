@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Query, HTTPException
+from fastapi import APIRouter, Query, HTTPException, status
 
 from ..services.cards.card_types import get_card_type_generator
 
@@ -15,7 +15,8 @@ async def get_card(
     card_generator = get_card_type_generator(card_type)
     if card_generator is None:
         raise HTTPException(
-            status_code=404, detail=f"The '{card_type}' card type is unknown."
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"The '{card_type}' card type is unknown.",
         )
 
     if card_type == "jk_classic":
