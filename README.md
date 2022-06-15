@@ -10,5 +10,5 @@ Ative o ambiente virtual
 execute o comando 
 
 ```bash
-uvicorn main:app --reload
+uvicorn app.main:app --reload
 ```
