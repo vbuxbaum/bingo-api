@@ -11,13 +11,13 @@ class CardGenerator(ABC):
         pass
 
     @classmethod
-    def add_wildcard(cls, card_columns: [[]]) -> None:
+    def add_wildcard(cls, card_columns: list[list]) -> None:
         """Adds 'None' to the center value"""
         center_lenght = len(card_columns) // 2
         card_columns[center_lenght][center_lenght] = None
 
     @classmethod
-    def get_card_hash(cls, card_type: str, card_columns: [[]]) -> str:
+    def get_card_hash(cls, card_type: str, card_columns: list[list]) -> str:
         """Returns a unique hash string for the card"""
         flatten_columns = [str(value) for col in card_columns for value in col]
         flatten_columns.sort()
@@ -38,7 +38,7 @@ class JKClassicGenerator(CardGenerator):
         }
 
     @classmethod
-    def get_card_columns(cls) -> [[]]:
+    def get_card_columns(cls) -> list[list]:
         card_columns = [
             random.sample(range(i, 15 + i), 5) for i in range(1, 75, 15)
         ]
@@ -57,7 +57,7 @@ class JKNGenerator(CardGenerator):
         }
 
     @classmethod
-    def get_card_columns(cls, column_number: int) -> [[]]:
+    def get_card_columns(cls, column_number: int) -> list[list]:
         linearity = column_number * 3
         card_columns = [
             random.sample(range(i, linearity + i), column_number)
