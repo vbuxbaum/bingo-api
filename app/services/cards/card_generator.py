@@ -45,9 +45,10 @@ class JKClassicGenerator(CardGenerator):
         cls.add_wildcard(card_columns)
         return card_columns
 
+
 class JKNGenerator(CardGenerator):
     @classmethod
-    def generate_card(cls, card_type: str, n : int) -> dict:
+    def generate_card(cls, card_type: str, n: int) -> dict:
         card_columns = cls.get_card_columns(n)
         return {
             "card_type": card_type,
@@ -57,9 +58,11 @@ class JKNGenerator(CardGenerator):
 
     @classmethod
     def get_card_columns(cls, column_number: int) -> [[]]:
-        linearity = (column_number*3)
+        linearity = column_number * 3
         card_columns = [
-            random.sample(range(i, linearity + i), column_number) for i in range(1, column_number*linearity, linearity)
+            random.sample(range(i, linearity + i), column_number)
+            for i in range(1, column_number * linearity, linearity)
         ]
-        if column_number%2!=0: cls.add_wildcard(card_columns)
+        if column_number % 2 != 0:
+            cls.add_wildcard(card_columns)
         return card_columns
