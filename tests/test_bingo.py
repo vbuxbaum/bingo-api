@@ -69,17 +69,29 @@ def test_get_n_3_columns_card(client):
     assert res.json()["card_type"] == "jk_n"
     assert len(res.json()["card_columns"]) == 3
 
+
 def test_get_n_8_columns_card(client):
     res = client.get("/card?card_type=jk_n&n=8")
     assert res.status_code == 200
     assert res.json()["card_type"] == "jk_n"
     assert len(res.json()["card_columns"]) == 8
 
+
 def test_get_n_card_invalid_n(client):
     res = client.get("/card?card_type=jk_n&n=1")
     assert res.status_code == 422
+    expected_err = [
+        {
+            "ctx": {"limit_value": 2},
+            "loc": ["query", "n"],
+            "msg": "ensure this value is greater than or equal to 2",
+            "type": "value_error.number.not_ge",
+        }
+    ]
     err_msg = res.json()["detail"]
-    assert err_msg == "The '1' number of columns is not accepted."
+
+    assert err_msg == expected_err
+
 
 def test_get_n_3_card_wild_card(client):
     res = client.get("/card?card_type=jk_n&n=3")
@@ -88,6 +100,7 @@ def test_get_n_3_card_wild_card(client):
 
     assert card_columns[len(card_columns) // 2][len(card_columns) // 2] is None
 
+
 def test_get_n_9_card_wild_card(client):
     res = client.get("/card?card_type=jk_n&n=9")
     assert res.status_code == 200
@@ -95,16 +108,24 @@ def test_get_n_9_card_wild_card(client):
 
     assert card_columns[len(card_columns) // 2][len(card_columns) // 2] is None
 
+
 def test_get_n_2_card_center_ok(client):
     res = client.get("/card?card_type=jk_n&n=2")
     assert res.status_code == 200
     card_columns = res.json()["card_columns"]
 
-    assert type(card_columns[len(card_columns) // 2][len(card_columns) // 2]) is int
+    assert (
+        type(card_columns[len(card_columns) // 2][len(card_columns) // 2])
+        is int
+    )
+
 
 def test_get_n_4_card_center_ok(client):
     res = client.get("/card?card_type=jk_n&n=4")
     assert res.status_code == 200
     card_columns = res.json()["card_columns"]
 
-    assert type(card_columns[len(card_columns) // 2][len(card_columns) // 2]) is int
+    assert (
+        type(card_columns[len(card_columns) // 2][len(card_columns) // 2])
+        is int
+    )
