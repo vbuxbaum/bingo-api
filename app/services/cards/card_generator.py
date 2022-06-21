@@ -2,6 +2,8 @@ from abc import ABC, abstractmethod
 import hashlib
 import random
 
+from pydantic import BaseModel
+
 
 class CardGenerator(ABC):
     @classmethod
@@ -66,3 +68,7 @@ class JKNGenerator(CardGenerator):
         if column_number % 2 != 0:
             cls.add_wildcard(card_columns)
         return card_columns
+
+
+class BingoCard(BaseModel):
+    pass
