@@ -5,14 +5,14 @@ O [deploy oficial](https://bingo-fastapi.herokuapp.com/) foi feito no Heroku, on
 
 ## Como executar
 
-Instale as dependências no ambiente virtual
+:eyes: Como é um projeto Python com várias dependências, a boa prática é usar um [ambiente virtual](https://docs.python.org/3/library/venv.html)
+
+Instale as dependências
 ```bash
 pip install -r dev-requirements.txt
 ```
 
-Ative o ambiente virtual
-
-execute o comando 
+Execute o comando 
 
 ```bash
 uvicorn app.main:app --reload
