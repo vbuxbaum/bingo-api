@@ -4,13 +4,16 @@ from app.models.card_model import BingoCard
 from app.services.card_generators import (
     ClassicGenerator,
     NSquareGenerator,
+    NSquareDiagGenerator
 )
+
 
 router = APIRouter(prefix="/card", tags=["cards"])
 
 CARD_TYPES = {
     ClassicGenerator.TYPE_ID: ClassicGenerator,
     NSquareGenerator.TYPE_ID: NSquareGenerator,
+    NSquareDiagGenerator.TYPE_ID: NSquareDiagGenerator,
 }
 
 
