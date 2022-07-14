@@ -1,13 +1,14 @@
 from fastapi import APIRouter, Query, HTTPException, status
 
-from ..services.cards.card_types import get_card_type_generator
+from app.models.card_model import BingoCard
+from app.services.card_generators import get_card_type_generator
 
 router = APIRouter(prefix="/card", tags=["cards"])
 
 
-@router.get("/")
+@router.get("/", response_model=BingoCard)
 async def get_card(
-    card_type: str = Query(default="jk_classic", example="jk_classic"),
+    card_type: str = Query(default="classic", example="classic"),
     card_size: int = Query(default=5, example=5, ge=2, alias="n"),
 ):
     """Provides values for a Bingo card of specified type"""
@@ -19,7 +20,7 @@ async def get_card(
             detail=f"The '{card_type}' card type is unknown.",
         )
 
-    if card_type == "jk_classic":
-        return card_generator.generate_card(card_type=card_type)
-    elif card_type == "jk_n":
-        return card_generator.generate_card(card_type=card_type, n=card_size)
+    if card_type == "classic":
+        return card_generator.generate_card()
+    if card_type == "n_square":
+        return card_generator.generate_card(n=card_size)
