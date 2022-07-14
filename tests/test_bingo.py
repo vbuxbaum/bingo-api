@@ -36,6 +36,7 @@ def test_get_card_valid_type(client):
 def test_get_card_invalid_type(client):
     res = client.get("/card?card_type=invalid_type")
     assert res.status_code == 404
+
     err_msg = res.json()["detail"]
     assert err_msg == "The 'invalid_type' card type is unknown."
 
@@ -43,20 +44,21 @@ def test_get_card_invalid_type(client):
 def test_get_card_unique_values(client):
     res = client.get("/card")
     assert res.status_code == 200
+
     card_values = set()
     for columns in res.json()["card_values"]:
         for value in columns:
             card_values.add(value)
-
     assert len(card_values) == len(res.json()["card_values"]) ** 2
 
 
 def test_get_card_wild_card(client):
     res = client.get("/card")
     assert res.status_code == 200
-    card_values = res.json()["card_values"]
 
-    assert card_values[len(card_values) // 2][len(card_values) // 2] is None
+    card_values = res.json()["card_values"]
+    center = len(card_values) // 2
+    assert card_values[center][center] is None
 
 
 def test_get_n_default_columns_card(client):
@@ -77,6 +79,7 @@ def test_get_n_3_columns_card(client, n):
 def test_get_n_card_invalid_n(client):
     res = client.get("/card?card_type=n_square&n=1")
     assert res.status_code == 422
+
     expected_err = [
         {
             "ctx": {"limit_value": 2},
@@ -86,37 +89,36 @@ def test_get_n_card_invalid_n(client):
         }
     ]
     err_msg = res.json()["detail"]
-
     assert err_msg == expected_err
 
 
-@given(n=st.integers(min_value=1, max_value=10))
-def test_get_odd_saquare_card_wildcard(client, n):
-    given_odd_int = n * 2 + 1
-    res = client.get(f"/card?card_type=n_square&n={given_odd_int}")
+@given(odd_n=st.integers(min_value=2, max_value=20).filter(lambda x: x % 2))
+def test_get_odd_saquare_card_wildcard(client, odd_n):
+    res = client.get(f"/card?card_type=n_square&n={odd_n}")
     assert res.status_code == 200
+
     card_values = res.json()["card_values"]
+    center = len(card_values) // 2
+    assert card_values[center][center] is None
 
-    assert card_values[len(card_values) // 2][len(card_values) // 2] is None
 
-
-@given(n=st.integers(min_value=1, max_value=10))
-def test_get_even_saquare_card_wildcard(client, n):
-    given_even_int = n * 2
-    res = client.get(f"/card?card_type=n_square&n={given_even_int}")
+@given(
+    even_n=st.integers(min_value=2, max_value=20).filter(lambda x: not x % 2)
+)
+def test_get_even_saquare_card_wildcard(client, even_n):
+    res = client.get(f"/card?card_type=n_square&n={even_n}")
     assert res.status_code == 200
-    card_values = res.json()["card_values"]
 
-    assert (
-        type(card_values[len(card_values) // 2][len(card_values) // 2]) is int
-    )
+    card_values = res.json()["card_values"]
+    center = len(card_values) // 2
+    assert isinstance(card_values[center][center], int)
 
 
 @given(n=st.integers(min_value=2, max_value=20))
 def test_get_n_square_diag(client, n):
     res = client.get(f"/card?card_type=n_square_diag&n={n}")
     assert res.status_code == 200
-    card_values = res.json()["card_values"]
 
-    for i in range(len(card_values)):
+    card_values = res.json()["card_values"]
+    for i, _ in enumerate(card_values):
         assert card_values[i][i] is None
