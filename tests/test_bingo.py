@@ -2,8 +2,11 @@ from fastapi.testclient import TestClient
 import pytest
 from app.main import app
 
+from hypothesis import given
+import hypothesis.strategies as st
 
-@pytest.fixture
+
+@pytest.fixture(scope="session")
 def client():
     return TestClient(app)
 
@@ -63,18 +66,12 @@ def test_get_n_default_columns_card(client):
     assert len(res.json()["card_values"]) == 5
 
 
-def test_get_n_3_columns_card(client):
-    res = client.get("/card?card_type=n_square&n=3")
+@given(n=st.integers(min_value=2, max_value=20))
+def test_get_n_3_columns_card(client, n):
+    res = client.get(f"/card?card_type=n_square&n={n}")
     assert res.status_code == 200
     assert res.json()["card_type"] == "n_square"
-    assert len(res.json()["card_values"]) == 3
-
-
-def test_get_n_8_columns_card(client):
-    res = client.get("/card?card_type=n_square&n=8")
-    assert res.status_code == 200
-    assert res.json()["card_type"] == "n_square"
-    assert len(res.json()["card_values"]) == 8
+    assert len(res.json()["card_values"]) == n
 
 
 def test_get_n_card_invalid_n(client):
@@ -93,39 +90,33 @@ def test_get_n_card_invalid_n(client):
     assert err_msg == expected_err
 
 
-def test_get_n_3_card_wild_card(client):
-    res = client.get("/card?card_type=n_square&n=3")
+@given(n=st.integers(min_value=1, max_value=10))
+def test_get_odd_saquare_card_wildcard(client, n):
+    given_odd_int = n * 2 + 1
+    res = client.get(f"/card?card_type=n_square&n={given_odd_int}")
     assert res.status_code == 200
     card_values = res.json()["card_values"]
 
     assert card_values[len(card_values) // 2][len(card_values) // 2] is None
 
 
-def test_get_n_9_card_wild_card(client):
-    res = client.get("/card?card_type=n_square&n=9")
-    assert res.status_code == 200
-    card_values = res.json()["card_values"]
-
-    assert card_values[len(card_values) // 2][len(card_values) // 2] is None
-
-
-def test_get_n_2_card_center_ok(client):
-    res = client.get("/card?card_type=n_square&n=2")
+@given(n=st.integers(min_value=1, max_value=10))
+def test_get_even_saquare_card_wildcard(client, n):
+    given_even_int = n * 2
+    res = client.get(f"/card?card_type=n_square&n={given_even_int}")
     assert res.status_code == 200
     card_values = res.json()["card_values"]
 
     assert (
-        type(card_values[len(card_values) // 2][len(card_values) // 2])
-        is int
+        type(card_values[len(card_values) // 2][len(card_values) // 2]) is int
     )
 
 
-def test_get_n_4_card_center_ok(client):
-    res = client.get("/card?card_type=n_square&n=4")
+@given(n=st.integers(min_value=2, max_value=20))
+def test_get_n_square_diag(client, n):
+    res = client.get(f"/card?card_type=n_square_diag&n={n}")
     assert res.status_code == 200
     card_values = res.json()["card_values"]
 
-    assert (
-        type(card_values[len(card_values) // 2][len(card_values) // 2])
-        is int
-    )
+    for i in range(len(card_values)):
+        assert card_values[i][i] is None
