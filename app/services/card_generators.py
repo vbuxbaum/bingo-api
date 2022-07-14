@@ -53,12 +53,25 @@ class NSquareGenerator(CardGenerator):
         return new_card
 
     @classmethod
-    def gen_card_values(cls, column_number: int) -> list[list]:
-        linearity = column_number * 3
+    def gen_card_values(cls, card_size: int) -> list[list]:
+        linearity = card_size * 3
         card_columns = [
-            random.sample(range(i, linearity + i), column_number)
-            for i in range(1, column_number * linearity, linearity)
+            random.sample(range(i, linearity + i), card_size)
+            for i in range(1, card_size * linearity, linearity)
         ]
-        if column_number % 2 != 0:
+        if card_size % 2 != 0:
             cls._add_wildcard(card_columns)
+        return card_columns
+
+
+class NSquareDiagGenerator(NSquareGenerator):
+    TYPE_ID = "n_square_diag"
+
+    @classmethod
+    def gen_card_values(cls, card_size: int) -> list[list]:
+        card_columns = super().gen_card_values(card_size)
+
+        for i in range(len(card_columns)):
+            card_columns[i][i] = None
+
         return card_columns
