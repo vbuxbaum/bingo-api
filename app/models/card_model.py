@@ -8,8 +8,8 @@ class BingoCard(BaseModel):
     card_type: str
     card_hash: Optional[str]
 
-    def set_card_hash(self) -> str:
-        """Returns a unique hash string for the card"""
+    def set_card_hash(self) -> None:
+        """Sets a unique hash string for the card"""
         flatten_values = []
         for col in self.card_values:
             for value in col:
