@@ -1,11 +1,11 @@
 import hashlib
-from typing import Optional, Union
+from typing import Optional
 from pydantic import BaseModel
 
 
 class BingoCard(BaseModel):
-    card_values: list[list[Union[int, None]]]
-    card_type: Optional[str]
+    card_values: list[list]
+    card_type: str
     card_hash: Optional[str]
 
     def set_card_hash(self) -> str:

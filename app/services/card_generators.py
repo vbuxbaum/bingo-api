@@ -7,15 +7,15 @@ from app.models.card_model import BingoCard
 class CardGenerator(ABC):
     @classmethod
     @abstractmethod
-    def generate_card(cls):
+    def generate_card(cls) -> BingoCard:
         """Returns a dictionary with elementary card data"""
         raise NotImplementedError
 
     @classmethod
-    def add_wildcard(cls, card_columns: list[list]) -> None:
+    def _add_wildcard(cls, card_values: list[list]) -> None:
         """Adds 'None' to the center value"""
-        center_lenght = len(card_columns) // 2
-        card_columns[center_lenght][center_lenght] = None
+        center_lenght = len(card_values) // 2
+        card_values[center_lenght][center_lenght] = None
 
 
 class ClassicGenerator(CardGenerator):
@@ -35,7 +35,7 @@ class ClassicGenerator(CardGenerator):
         card_columns = [
             random.sample(range(i, 15 + i), 5) for i in range(1, 75, 15)
         ]
-        super().add_wildcard(card_columns)
+        super()._add_wildcard(card_columns)
         return card_columns
 
 
@@ -44,7 +44,7 @@ class NSquareGenerator(CardGenerator):
     TYPE_ID = "n_square"
 
     @classmethod
-    def generate_card(cls, n: int) -> dict:
+    def generate_card(cls, n: int) -> BingoCard:
         new_card = BingoCard(
             card_values=cls.gen_card_values(n), card_type=cls.TYPE_ID
         )
@@ -60,16 +60,5 @@ class NSquareGenerator(CardGenerator):
             for i in range(1, column_number * linearity, linearity)
         ]
         if column_number % 2 != 0:
-            cls.add_wildcard(card_columns)
+            cls._add_wildcard(card_columns)
         return card_columns
-
-
-CARD_TYPES = {
-    ClassicGenerator.TYPE_ID: ClassicGenerator,
-    NSquareGenerator.TYPE_ID: NSquareGenerator,
-}
-
-
-def get_card_type_generator(type_identifier):
-    """Returns the card generator class for the informed identifier"""
-    return CARD_TYPES.get(type_identifier, None)
