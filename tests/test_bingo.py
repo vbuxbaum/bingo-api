@@ -20,14 +20,14 @@ def test_home(client):
 def test_get_default_card(client):
     res = client.get("/card")
     assert res.status_code == 200
-    assert res.json()["card_type"] == "jk_classic"
-    assert len(res.json()["card_columns"]) == 5
+    assert res.json()["card_type"] == "classic"
+    assert len(res.json()["card_values"]) == 5
 
 
 def test_get_card_valid_type(client):
-    res = client.get("/card?card_type=jk_classic")
+    res = client.get("/card?card_type=classic")
     assert res.status_code == 200
-    assert res.json()["card_type"] == "jk_classic"
+    assert res.json()["card_type"] == "classic"
 
 
 def test_get_card_invalid_type(client):
@@ -41,70 +41,91 @@ def test_get_card_unique_values(client):
     res = client.get("/card")
     assert res.status_code == 200
     card_values = set()
-    for columns in res.json()["card_columns"]:
+    for columns in res.json()["card_values"]:
         for value in columns:
             card_values.add(value)
 
-    assert len(card_values) == len(res.json()["card_columns"]) ** 2
+    assert len(card_values) == len(res.json()["card_values"]) ** 2
 
 
 def test_get_card_wild_card(client):
     res = client.get("/card")
     assert res.status_code == 200
-    card_columns = res.json()["card_columns"]
+    card_values = res.json()["card_values"]
 
-    assert card_columns[len(card_columns) // 2][len(card_columns) // 2] is None
+    assert card_values[len(card_values) // 2][len(card_values) // 2] is None
 
 
 def test_get_n_default_columns_card(client):
-    res = client.get("/card?card_type=jk_n")
+    res = client.get("/card?card_type=n_square")
     assert res.status_code == 200
-    assert res.json()["card_type"] == "jk_n"
-    assert len(res.json()["card_columns"]) == 5
+    assert res.json()["card_type"] == "n_square"
+    assert len(res.json()["card_values"]) == 5
 
 
 def test_get_n_3_columns_card(client):
-    res = client.get("/card?card_type=jk_n&n=3")
+    res = client.get("/card?card_type=n_square&n=3")
     assert res.status_code == 200
-    assert res.json()["card_type"] == "jk_n"
-    assert len(res.json()["card_columns"]) == 3
+    assert res.json()["card_type"] == "n_square"
+    assert len(res.json()["card_values"]) == 3
+
 
 def test_get_n_8_columns_card(client):
-    res = client.get("/card?card_type=jk_n&n=8")
+    res = client.get("/card?card_type=n_square&n=8")
     assert res.status_code == 200
-    assert res.json()["card_type"] == "jk_n"
-    assert len(res.json()["card_columns"]) == 8
+    assert res.json()["card_type"] == "n_square"
+    assert len(res.json()["card_values"]) == 8
+
 
 def test_get_n_card_invalid_n(client):
-    res = client.get("/card?card_type=jk_n&n=1")
+    res = client.get("/card?card_type=n_square&n=1")
     assert res.status_code == 422
+    expected_err = [
+        {
+            "ctx": {"limit_value": 2},
+            "loc": ["query", "n"],
+            "msg": "ensure this value is greater than or equal to 2",
+            "type": "value_error.number.not_ge",
+        }
+    ]
     err_msg = res.json()["detail"]
-    assert err_msg == "The '1' number of columns is not accepted."
+
+    assert err_msg == expected_err
+
 
 def test_get_n_3_card_wild_card(client):
-    res = client.get("/card?card_type=jk_n&n=3")
+    res = client.get("/card?card_type=n_square&n=3")
     assert res.status_code == 200
-    card_columns = res.json()["card_columns"]
+    card_values = res.json()["card_values"]
 
-    assert card_columns[len(card_columns) // 2][len(card_columns) // 2] is None
+    assert card_values[len(card_values) // 2][len(card_values) // 2] is None
+
 
 def test_get_n_9_card_wild_card(client):
-    res = client.get("/card?card_type=jk_n&n=9")
+    res = client.get("/card?card_type=n_square&n=9")
     assert res.status_code == 200
-    card_columns = res.json()["card_columns"]
+    card_values = res.json()["card_values"]
 
-    assert card_columns[len(card_columns) // 2][len(card_columns) // 2] is None
+    assert card_values[len(card_values) // 2][len(card_values) // 2] is None
+
 
 def test_get_n_2_card_center_ok(client):
-    res = client.get("/card?card_type=jk_n&n=2")
+    res = client.get("/card?card_type=n_square&n=2")
     assert res.status_code == 200
-    card_columns = res.json()["card_columns"]
+    card_values = res.json()["card_values"]
 
-    assert type(card_columns[len(card_columns) // 2][len(card_columns) // 2]) is int
+    assert (
+        type(card_values[len(card_values) // 2][len(card_values) // 2])
+        is int
+    )
+
 
 def test_get_n_4_card_center_ok(client):
-    res = client.get("/card?card_type=jk_n&n=4")
+    res = client.get("/card?card_type=n_square&n=4")
     assert res.status_code == 200
-    card_columns = res.json()["card_columns"]
+    card_values = res.json()["card_values"]
 
-    assert type(card_columns[len(card_columns) // 2][len(card_columns) // 2]) is int
+    assert (
+        type(card_values[len(card_values) // 2][len(card_values) // 2])
+        is int
+    )
