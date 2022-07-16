@@ -8,7 +8,7 @@ class CardGenerator(ABC):
     @classmethod
     @abstractmethod
     def generate_card(cls) -> BingoCard:
-        """Returns a dictionary with elementary card data"""
+        """Returns the card data based on the concrete generator"""
         raise NotImplementedError
 
     @classmethod
@@ -78,7 +78,7 @@ class NSquareDiagGenerator(NSquareGenerator):
         return card_columns
 
 
-CARD_GENERATORS = {
+CARD_GENERATORS: dict[str, CardGenerator] = {
     ClassicGenerator.TYPE_ID: ClassicGenerator,
     NSquareGenerator.TYPE_ID: NSquareGenerator,
     NSquareDiagGenerator.TYPE_ID: NSquareDiagGenerator,
