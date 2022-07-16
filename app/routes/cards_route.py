@@ -1,20 +1,9 @@
 from fastapi import APIRouter, Query, HTTPException, status
 
 from app.models.card_model import BingoCard
-from app.services.card_generators import (
-    ClassicGenerator,
-    NSquareGenerator,
-    NSquareDiagGenerator
-)
-
+from app.services.card_generators import CARD_GENERATORS
 
 router = APIRouter(prefix="/card", tags=["cards"])
-
-CARD_TYPES = {
-    ClassicGenerator.TYPE_ID: ClassicGenerator,
-    NSquareGenerator.TYPE_ID: NSquareGenerator,
-    NSquareDiagGenerator.TYPE_ID: NSquareDiagGenerator,
-}
 
 
 @router.get("/", response_model=BingoCard)
@@ -25,14 +14,9 @@ def get_card(
     """Provides values for a Bingo card of specified type"""
 
     try:
-        card_generator = CARD_TYPES[card_type]
+        return CARD_GENERATORS[card_type].generate_card(n=card_size)
     except KeyError:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"The '{card_type}' card type is unknown.",
         )
-
-    if card_type == "classic":
-        return card_generator.generate_card()
-
-    return card_generator.generate_card(n=card_size)
