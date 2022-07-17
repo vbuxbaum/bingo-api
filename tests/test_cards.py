@@ -1,23 +1,5 @@
-from fastapi.testclient import TestClient
-import pytest
-from app.main import app
-
 from hypothesis import given
 import hypothesis.strategies as st
-
-
-@pytest.fixture(scope="session")
-def client():
-    return TestClient(app)
-
-
-def test_home(client):
-    res = client.get("/")
-    assert res.status_code == 200
-    assert (
-        "Let's play! Visit route /card for a random classic card."
-        in res.json()["message"]
-    )
 
 
 def test_get_default_card(client):
