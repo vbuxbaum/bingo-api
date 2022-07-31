@@ -18,6 +18,10 @@ Execute o comando
 uvicorn app.main:app --reload
 ```
 
+## Autenticação
+
+Para criar e deletar `rounds`, é necessário informar um API_TOKEN válido.
+
 ## Tipos de cartelas
 
 ### Clássica (`classic`)
@@ -38,9 +42,12 @@ Uma cartela simétrica de tamanho `N`, com as casas da diagonal (_topo-esquerda 
 
 Os valores são gerados conforme a regra anterior
 
+## Rounds 
+
+Rounds são "partidas" de bingo, que possuem um tipo de cartela definido, um conjunto de cartelas participantes, e os números já sorteados
+
 ## Contribuições
 
 Abra um PR (via fork)! ❤️
 
 Fez um front-end para as renderizar as cartelas? Fala comigo!
-
