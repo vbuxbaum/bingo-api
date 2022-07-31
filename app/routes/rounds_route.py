@@ -1,18 +1,18 @@
-from fastapi import APIRouter, Body, Depends, HTTPException, status
+from fastapi import APIRouter, Body, Depends, HTTPException, Query, status
 from app.models.round_model import RoundModel
 from app.services.rounds_manager import RoundManager
-from app.services.token_auth import validation
+from app.services.authentication import validate_token
 
 router = APIRouter(prefix="/rounds", tags=["rounds"])
 
 
-@router.post("/create", response_model=RoundModel)
-async def create_round(
-    round: RoundModel = Body(...), token_validation: bool = Depends(validation)
-):
-    if not token_validation:
-        raise HTTPException(status_code=403, detail="Invalid token")
+async def validation(api_token=Query()):
+    if not validate_token(api_token):
+        raise HTTPException(status_code=403, detail="Invalid API token")
 
+
+@router.post("/create", response_model=RoundModel)
+async def create_round(round: RoundModel = Body(...), _=Depends(validation)):
     return await RoundManager.create(round)
 
 
@@ -31,8 +31,6 @@ async def get_round_by_id(id: str):
 
 
 @router.delete("/{id}", status_code=status.HTTP_200_OK)
-async def delete_round(id: str, token_validation: bool = Depends(validation)):
-    if not token_validation:
-        raise HTTPException(status_code=403, detail="Invalid token")
-    elif not await RoundManager.delete_one(id):
+async def delete_round(id: str, _=Depends(validation)):
+    if not await RoundManager.delete_one(id):
         raise HTTPException(status_code=404, detail=f"Round {id} not found")
