@@ -1,5 +1,6 @@
 from datetime import datetime
 import random
+from typing import Union
 from bson import ObjectId
 from pydantic import Field
 
@@ -13,9 +14,11 @@ def pin_generator() -> str:
 class RoundModel(BaseModel):
     name: str = Field(...)
     cards_type: str = Field(...)
-    numbers_to_pick: list[int] = Field(...)
-    numbers_picked: list[int] = Field(default=[])
     pin: str = Field(default_factory=pin_generator)
+    most_recently_picked: Union[int, None] = Field(default=None)
+    is_round_over: bool = Field(default=False)
+    numbers_picked: list[int] = Field(default=[])
+    numbers_to_pick: list[int] = Field(default=[])
     created_at: datetime = Field(default_factory=datetime.now)
 
     class Config:
@@ -25,3 +28,13 @@ class RoundModel(BaseModel):
         schema_extra = {
             "example": {"name": "My Bingo party", "cards_type": "classic"}
         }
+
+    def pick_number(self) -> None:
+        try:
+            self.most_recently_picked = random.choice(self.numbers_to_pick)
+        except IndexError:
+            self.is_round_over = True
+            return
+
+        self.numbers_to_pick.remove(self.most_recently_picked)
+        self.numbers_picked.append(self.most_recently_picked)
