@@ -1,8 +1,8 @@
 from pymongo import ReturnDocument
-from app.models.base_model import db
 from fastapi.encoders import jsonable_encoder
 from pymongo.results import DeleteResult
 
+from app.models.base_model import db
 from app.models.round_model import RoundModel
 
 
