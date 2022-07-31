@@ -30,6 +30,16 @@ async def get_round_by_id(id: str):
     return round
 
 
+@router.put("/{id}/pick", response_model=RoundModel)
+async def pick_number_for_round_id(id: str, _=Depends(validation)):
+    round = await RoundManager.pick_number(id)
+
+    if round is None:
+        raise HTTPException(status_code=404, detail=f"Round {id} not found")
+
+    return round
+
+
 @router.delete("/{id}", status_code=status.HTTP_200_OK)
 async def delete_round(id: str, _=Depends(validation)):
     if not await RoundManager.delete_one(id):
