@@ -13,6 +13,8 @@ def pin_generator() -> str:
 class RoundModel(BaseModel):
     name: str = Field(...)
     cards_type: str = Field(...)
+    numbers_to_pick: list[int] = Field(...)
+    numbers_picked: list[int] = Field(default=[])
     pin: str = Field(default_factory=pin_generator)
     created_at: datetime = Field(default_factory=datetime.now)
 
