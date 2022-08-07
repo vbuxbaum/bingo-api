@@ -1,5 +1,5 @@
-from app.config import settings
+from app.config import get_settings
 
 
 def validate_token(token: str):
-    return token == settings.api_token
+    return token == get_settings().api_token
