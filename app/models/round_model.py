@@ -1,7 +1,7 @@
 from datetime import datetime
 import random
 from typing import Union
-from bson import ObjectId
+from bson.objectid import ObjectId
 from pydantic import Field
 
 from app.models.base_model import BaseModel

@@ -1,12 +1,11 @@
 import hashlib
-from typing import Optional
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class BingoCard(BaseModel):
     card_values: list[list]
     card_type: str
-    card_hash: Optional[str]
+    card_hash: str = Field(default='')
 
     def set_card_hash(self) -> None:
         """Sets a unique hash string for the card"""

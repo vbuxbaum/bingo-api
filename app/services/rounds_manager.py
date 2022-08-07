@@ -1,4 +1,4 @@
-from pymongo import ReturnDocument
+from pymongo.collection import ReturnDocument
 from fastapi.encoders import jsonable_encoder
 from pymongo.results import DeleteResult
 

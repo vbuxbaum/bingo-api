@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 import random
+from typing import Type
 
 from app.models.card_model import BingoCard
 
@@ -7,7 +8,7 @@ from app.models.card_model import BingoCard
 class CardGenerator(ABC):
     @classmethod
     @abstractmethod
-    def generate_card(cls) -> BingoCard:
+    def generate_card(cls, **kwargs) -> BingoCard:
         """Returns the card data based on the concrete generator"""
         raise NotImplementedError
 
@@ -78,7 +79,7 @@ class NSquareDiagGenerator(NSquareGenerator):
         return card_columns
 
 
-CARD_GENERATORS: dict[str, CardGenerator] = {
+CARD_GENERATORS: dict[str, Type[CardGenerator]] = {
     ClassicGenerator.TYPE_ID: ClassicGenerator,
     NSquareGenerator.TYPE_ID: NSquareGenerator,
     NSquareDiagGenerator.TYPE_ID: NSquareDiagGenerator,

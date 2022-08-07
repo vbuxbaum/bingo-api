@@ -1,11 +1,11 @@
-import motor.motor_asyncio
+from motor.motor_asyncio import AsyncIOMotorClient
 from pymongo.database import Database
 import pydantic
 from app.config import get_settings
-from bson import ObjectId
+from bson.objectid import ObjectId
 
 
-client = motor.motor_asyncio.AsyncIOMotorClient(get_settings().mongodb_url)
+client = AsyncIOMotorClient(get_settings().mongodb_url)
 db: Database = client.bingo
 
 
