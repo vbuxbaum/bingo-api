@@ -1,5 +1,5 @@
-import os
+from app.config import settings
 
 
 def validate_token(token: str):
-    return token == os.getenv("API_TOKEN")
+    return token == settings.api_token
