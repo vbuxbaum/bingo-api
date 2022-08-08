@@ -18,9 +18,14 @@ Execute o comando
 uvicorn app.main:app --reload
 ```
 
-## Autenticação
+> De forma alternativa ao comando anterior, você pode definir as variáveis de ambiente `PORT=8000` e `DEBUG=--reload` e utilizar o comando `heroku local`
 
-Para criar e deletar `rounds`, é necessário informar um API_TOKEN válido.
+### Configurações de ambiente
+
+É necessário definir a variável de ambiente `MONGODB_URL` no arquivo `.env` com a URL para conexão com o banco de dados
+
+Opcionalmente, você pode definir uma variável `API_TOKEN` para os endpoints de PUT, POST e DELETE. Localmente, o valor padrão é `""`. No ambiente de produção, há um token previamente definido.
+
 
 ## Tipos de cartelas
 
@@ -34,7 +39,7 @@ Os valores (1 até 75) são divididos em 5 intervalos de 15
 
 Uma cartela simétrica de tamanho `N`. Se `N` for impar, a casa central ficará vazia.
 
-Os valores (1 até `N^2 * 3`) são divididos em `N` intervalos de `N * 3`
+Os valores (1 até `N^2 * 3`) são divididos em `N` intervalos.
 
 ### Quadrado N x N com diagonal vazia (`n_square_diag`)
 
@@ -50,4 +55,4 @@ Rounds são "partidas" de bingo, que possuem um tipo de cartela definido, um con
 
 Abra um PR (via fork)! ❤️
 
-Fez um front-end para as renderizar as cartelas? Fala comigo!
+Fez um front-end para as renderizar as cartelas? Fala comigo [aqui](https://www.linkedin.com/in/vitorbuxbaum/)!
