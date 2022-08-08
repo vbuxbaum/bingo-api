@@ -6,7 +6,7 @@ from app.services.authentication import validate_token
 router = APIRouter(prefix="/rounds", tags=["rounds"])
 
 
-async def validation(api_token=Query()):
+async def validation(api_token: str = Query(default="")):
     if not validate_token(api_token):
         raise HTTPException(status_code=403, detail="Invalid API token")
 
