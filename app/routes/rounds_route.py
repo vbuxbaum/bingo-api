@@ -29,6 +29,13 @@ async def get_round_by_id(id: str):
 
     return round
 
+@router.get("/pin/{pin}", response_model=RoundModel)
+async def get_round_by_pin(pin: str):
+    round = await RoundManager.get_one_by_pin(pin)
+    if round is None:
+        raise HTTPException(status_code=404, detail=f"Pin {pin} not found")
+
+    return round
 
 @router.put("/{id}/pick", response_model=RoundModel)
 async def pick_number_for_round_id(id: str, _=Depends(validation)):

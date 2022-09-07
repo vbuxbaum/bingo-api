@@ -29,6 +29,10 @@ class RoundManager:
         return await cls.db_collection.find_one({"_id": id})
 
     @classmethod
+    async def get_one_by_pin(cls, pin):
+        return await cls.db_collection.find_one({"pin": pin})
+
+    @classmethod
     async def pick_number(cls, id):
         found_round = await cls.get_one_by_id(id)
         if not found_round:
