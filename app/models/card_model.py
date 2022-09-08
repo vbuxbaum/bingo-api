@@ -1,9 +1,10 @@
 import hashlib
+from typing import List
 from pydantic import BaseModel, Field
 
 
 class BingoCard(BaseModel):
-    card_values: list[list]
+    card_values: List[List]
     card_type: str
     card_hash: str = Field(default='')
 
