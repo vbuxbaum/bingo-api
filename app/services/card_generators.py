@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 import random
-from typing import List, Type
+from typing import Dict, List, Type
 
 from app.models.card_model import BingoCard
 
@@ -79,7 +79,7 @@ class NSquareDiagGenerator(NSquareGenerator):
         return card_columns
 
 
-CARD_GENERATORS: dict[str, Type[CardGenerator]] = {
+CARD_GENERATORS: Dict[str, Type[CardGenerator]] = {
     ClassicGenerator.TYPE_ID: ClassicGenerator,
     NSquareGenerator.TYPE_ID: NSquareGenerator,
     NSquareDiagGenerator.TYPE_ID: NSquareDiagGenerator,
