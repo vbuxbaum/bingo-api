@@ -1,6 +1,6 @@
 from datetime import datetime
 import random
-from typing import Union
+from typing import List, Union
 from bson.objectid import ObjectId
 from pydantic import Field
 
@@ -17,8 +17,8 @@ class RoundModel(BaseModel):
     pin: str = Field(default_factory=pin_generator)
     most_recently_picked: Union[int, None] = Field(default=None)
     is_round_over: bool = Field(default=False)
-    numbers_picked: list[int] = Field(default=[])
-    numbers_to_pick: list[int] = Field(default=[])
+    numbers_picked: List[int] = Field(default=[])
+    numbers_to_pick: List[int] = Field(default=[])
     created_at: datetime = Field(default_factory=datetime.now)
 
     class Config:
