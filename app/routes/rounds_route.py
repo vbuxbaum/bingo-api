@@ -14,17 +14,17 @@ async def validation(api_token: str = Query(default="")):
 
 @router.post("/create", response_model=RoundModel)
 async def create_round(round: RoundModel = Body(...), _=Depends(validation)):
-    return await RoundManager.create(round)
+    return RoundManager.create(round)
 
 
 @router.get("/", response_model=List[RoundModel])
 async def list_rounds():
-    return await RoundManager.get_many()
+    return RoundManager.get_many()
 
 
 @router.get("/{id}", response_model=RoundModel)
 async def get_round_by_id(id: str):
-    round = await RoundManager.get_one_by_id(id)
+    round = RoundManager.get_one_by_id(id)
     if round is None:
         raise HTTPException(status_code=404, detail=f"Round {id} not found")
 
@@ -33,7 +33,7 @@ async def get_round_by_id(id: str):
 
 @router.get("/pin/{pin}", response_model=RoundModel)
 async def get_round_by_pin(pin: str):
-    round = await RoundManager.get_one_by_pin(pin)
+    round = RoundManager.get_one_by_pin(pin)
     if round is None:
         raise HTTPException(status_code=404, detail=f"Pin {pin} not found")
 
@@ -42,7 +42,7 @@ async def get_round_by_pin(pin: str):
 
 @router.put("/{id}/pick", response_model=RoundModel)
 async def pick_number_for_round_id(id: str, _=Depends(validation)):
-    round = await RoundManager.pick_number(id)
+    round = RoundManager.pick_number(id)
 
     if round is None:
         raise HTTPException(status_code=404, detail=f"Round {id} not found")
@@ -52,5 +52,5 @@ async def pick_number_for_round_id(id: str, _=Depends(validation)):
 
 @router.delete("/{id}", status_code=status.HTTP_200_OK)
 async def delete_round(id: str, _=Depends(validation)):
-    if not await RoundManager.delete_one(id):
+    if not RoundManager.delete_one(id):
         raise HTTPException(status_code=404, detail=f"Round {id} not found")
