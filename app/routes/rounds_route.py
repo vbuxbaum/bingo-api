@@ -40,6 +40,17 @@ async def get_round_by_pin(pin: str):
     return round
 
 
+@router.put("/join/{pin}", response_model=RoundModel)
+async def join_round_with_pin(
+    pin: str, play_name: str = Query(example="Pl4y3r"), _=Depends(validation)
+):
+    round = RoundManager.join_with_pin(pin, play_name)
+    if round is None:
+        raise HTTPException(status_code=404, detail=f"Pin {pin} not found")
+
+    return round
+
+
 @router.put("/{id}/pick", response_model=RoundModel)
 async def pick_number_for_round_id(id: str, _=Depends(validation)):
     round = RoundManager.pick_number(id)
