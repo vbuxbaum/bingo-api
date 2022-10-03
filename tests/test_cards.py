@@ -50,7 +50,7 @@ def test_get_n_default_columns_card(client):
     assert len(res.json()["card_values"]) == 5
 
 
-@given(n=st.integers(min_value=2, max_value=20))
+@given(n=st.integers(min_value=2, max_value=10))
 def test_get_n_3_columns_card(client, n):
     res = client.get(f"/card?card_type=n_square&n={n}")
     assert res.status_code == 200
@@ -74,7 +74,7 @@ def test_get_n_card_invalid_n(client):
     assert err_msg == expected_err
 
 
-@given(odd_n=st.integers(min_value=2, max_value=20).filter(lambda x: x % 2))
+@given(odd_n=st.integers(min_value=2, max_value=15).filter(lambda x: x % 2))
 def test_get_odd_saquare_card_wildcard(client, odd_n):
     res = client.get(f"/card?card_type=n_square&n={odd_n}")
     assert res.status_code == 200
@@ -85,7 +85,7 @@ def test_get_odd_saquare_card_wildcard(client, odd_n):
 
 
 @given(
-    even_n=st.integers(min_value=2, max_value=20).filter(lambda x: not x % 2)
+    even_n=st.integers(min_value=2, max_value=15).filter(lambda x: not x % 2)
 )
 def test_get_even_saquare_card_wildcard(client, even_n):
     res = client.get(f"/card?card_type=n_square&n={even_n}")
@@ -96,7 +96,7 @@ def test_get_even_saquare_card_wildcard(client, even_n):
     assert isinstance(card_values[center][center], int)
 
 
-@given(n=st.integers(min_value=2, max_value=20))
+@given(n=st.integers(min_value=2, max_value=10))
 def test_get_n_square_diag(client, n):
     res = client.get(f"/card?card_type=n_square_diag&n={n}")
     assert res.status_code == 200
