@@ -3,7 +3,8 @@ from fastapi.encoders import jsonable_encoder
 from pymongo.results import DeleteResult
 
 from app.models.base_model import db
-from app.models.round_model import RoundModel
+from app.models.round_model import RoundModel, RoundPlayer
+from app.services.card_generators import CARD_GENERATORS
 
 
 class RoundManager:
@@ -31,6 +32,39 @@ class RoundManager:
     @classmethod
     def get_one_by_pin(cls, pin):
         return cls.db_collection.find_one({"pin": pin})
+
+    @classmethod
+    def join_with_pin(cls, pin, player_name):
+        found_round = cls.get_one_by_pin(pin)
+        if not found_round:
+            return None
+        if found_round["is_round_over"]:
+            return found_round
+
+        round_to_join = RoundModel(**found_round)
+
+        round_card_generator = CARD_GENERATORS[round_to_join.cards_type]
+        current_cards = set(jp.card for jp in round_to_join.joined_players)
+
+        while True:
+            player_card = round_card_generator.generate_card()
+            if player_card not in current_cards:
+                break
+
+        round_to_join.joined_players.append(
+            RoundPlayer(
+                player_name=player_name,
+                card=player_card,
+            )
+        )
+
+        updated_round = cls.db_collection.find_one_and_replace(
+            {"pin": round_to_join.pin},
+            jsonable_encoder(round_to_join),
+            return_document=ReturnDocument.AFTER,
+        )
+
+        return updated_round
 
     @classmethod
     def pick_number(cls, id):
