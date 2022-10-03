@@ -3,6 +3,7 @@ from app.services.rounds_manager import RoundManager
 from tests.factories.round_factory import RoundFactory
 import pytest
 from hypothesis import given, HealthCheck, settings, strategies as st
+from factory import Faker
 
 
 @pytest.fixture
@@ -43,14 +44,26 @@ def test_search_by_id(isolated_round_manager):
     assert found_round["_id"] == created_round["_id"]
 
 
-def test_join_round(isolated_round_manager):
-    created_round = isolated_round_manager.create(RoundFactory())
-    assert created_round["joined_players"] == []
-
-    joined_round = isolated_round_manager.join_with_pin(
-        created_round["pin"], player="test player"
+def test_join_classic_round(isolated_round_manager):
+    created_round = isolated_round_manager.create(
+        RoundFactory(cards_type="classic")
     )
-    assert len(joined_round["joined_players"])
+    joined_round = isolated_round_manager.join_with_pin(
+        created_round["pin"], player_name="test player"
+    )
+    assert len(joined_round["joined_players"]) == 1
+
+
+def test_unique_cards_in_round(isolated_round_manager):
+    created_round = isolated_round_manager.create(
+        RoundFactory(cards_type="classic")
+    )
+    players_to_join = 100
+    for _ in range(players_to_join):
+        joined_round = isolated_round_manager.join_with_pin(
+            created_round["pin"], player_name=str(Faker("name"))
+        )
+    assert len(joined_round["joined_players"]) == players_to_join
 
 
 def test_pick_number_for_round(isolated_round_manager):
