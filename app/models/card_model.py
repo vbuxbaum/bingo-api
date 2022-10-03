@@ -1,5 +1,5 @@
 import hashlib
-from typing import List, Union
+from typing import Any, List, Union
 from pydantic import BaseModel, Field
 
 CardRow = List[Union[int, None]]
@@ -10,6 +10,12 @@ class BingoCard(BaseModel):
     card_values: CardValues
     card_type: str
     card_hash: str = Field(default="")
+
+    def __hash__(self):
+        return self.card_hash
+
+    def __eq__(self, other: Any) -> bool:
+        return self.card_hash == other.card_hash
 
     def set_card_hash(self) -> None:
         """Sets a unique hash string for the card"""
