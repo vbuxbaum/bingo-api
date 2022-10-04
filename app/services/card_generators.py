@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 import random
-from typing import Dict, Type
+from typing import Type
+from frozendict import frozendict
 
 from app.models.card_model import BingoCard, CardValues
 
@@ -77,8 +78,10 @@ class NSquareDiagGenerator(NSquareGenerator):
         return card_columns
 
 
-CARD_GENERATORS: Dict[str, Type[CardGenerator]] = {
-    ClassicGenerator.TYPE_ID: ClassicGenerator,
-    NSquareGenerator.TYPE_ID: NSquareGenerator,
-    NSquareDiagGenerator.TYPE_ID: NSquareDiagGenerator,
-}
+CARD_GENERATORS: frozendict[str, Type[CardGenerator]] = frozendict(
+    {
+        ClassicGenerator.TYPE_ID: ClassicGenerator,
+        NSquareGenerator.TYPE_ID: NSquareGenerator,
+        NSquareDiagGenerator.TYPE_ID: NSquareDiagGenerator,
+    }
+)
