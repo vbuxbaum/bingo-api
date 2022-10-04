@@ -8,7 +8,7 @@ from app.models.card_model import BingoCard, CardValues
 class CardGenerator(ABC):
     @classmethod
     @abstractmethod
-    def generate_card(cls, **kwargs) -> BingoCard:
+    def generate_card(cls, **_) -> BingoCard:
         """Returns the card data based on the concrete generator"""
         raise NotImplementedError
 
@@ -23,7 +23,7 @@ class ClassicGenerator(CardGenerator):
     TYPE_ID = "classic"
 
     @classmethod
-    def generate_card(cls, **kwargs) -> BingoCard:
+    def generate_card(cls, **_) -> BingoCard:
         new_card = BingoCard(
             card_values=cls.gen_card_values(), card_type=cls.TYPE_ID
         )
@@ -46,7 +46,8 @@ class NSquareGenerator(CardGenerator):
     def generate_card(cls, **kwargs) -> BingoCard:
 
         new_card = BingoCard(
-            card_values=cls.gen_card_values(kwargs["n"]), card_type=cls.TYPE_ID
+            card_values=cls.gen_card_values(kwargs.get("n", 5)),
+            card_type=cls.TYPE_ID,
         )
 
         return new_card
