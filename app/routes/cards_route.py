@@ -5,10 +5,17 @@ from app.services.card_generators import CARD_GENERATORS
 
 router = APIRouter(prefix="/card", tags=["cards"])
 
+generators_examples = {
+    k: {
+        "value": k,
+    }
+    for k in CARD_GENERATORS
+}
+
 
 @router.get("/", response_model=BingoCard)
 def get_card(
-    card_type: str = Query(default="classic", example="classic"),
+    card_type: str = Query(default="classic", examples=generators_examples),
     card_size: int = Query(default=5, example=5, ge=2, alias="n"),
 ):
     """Provides values for a Bingo card of specified type"""
