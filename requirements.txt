@@ -8,6 +8,7 @@ dnspython==2.2.1
 email-validator==1.2.1
 fastapi==0.78.0
 flake8==4.0.1
+frozendict==2.3.4
 h11==0.13.0
 httptools==0.4.0
 idna==3.3
