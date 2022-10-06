@@ -35,8 +35,8 @@ class RoundModel(BaseModel):
         try:
             self.most_recently_picked = random.choice(self.numbers_to_pick)
         except IndexError:
-            self.is_round_over = True
             return
 
         self.numbers_to_pick.remove(self.most_recently_picked)
         self.numbers_picked.append(self.most_recently_picked)
+        self.is_round_over = not self.numbers_to_pick
