@@ -1,4 +1,3 @@
-from types import NoneType
 from app.services.card_generators import (
     CardGenerator,
     ClassicGenerator,
@@ -45,7 +44,7 @@ def test_create_n_square_card(card_size):
     assert len(unique_values) == (card_size**2)
 
     center = card_size // 2
-    expected_type = NoneType if card_size % 2 else int
+    expected_type = type(None) if card_size % 2 else int
     assert type(n_square_card.card_values[center][center]) is expected_type
 
 

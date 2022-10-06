@@ -1,0 +1,41 @@
+name: Lint and Testing
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+env:
+  MONGODB_URL: mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.6.0
+
+jobs:
+  flake8_py3:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        mongodb-version: ['latest']
+    steps:
+      - name: Setup Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.9
+          architecture: x64
+      - name: Checkout PyTorch
+        uses: actions/checkout@master
+      - name: Start MongoDB
+        uses: supercharge/mongodb-github-action@1.8.0
+        with:
+          mongodb-version: ${{ matrix.mongodb-version }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r dev-requirements.txt
+      - name: Run flake8
+        uses: suo/flake8-github-action@releases/v1
+        with:
+          checkName: 'flake8_py3'   # NOTE: This needs to be the same as the job name
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run pytest
+        run: python -m pytest
+
+
