@@ -1,7 +1,10 @@
+![Pytest](https://github.com/vbuxbaum/bingo-api/actions/workflows/lint-testing-action.yml/badge.svg)
+![Deploy](https://github.com/vbuxbaum/bingo-api/actions/workflows/python-app.yml/badge.svg)
+
 # bingo-api
 Uma API em Python (FastAPI) para gerar números de uma cartela de Bingo
 
-O [deploy oficial](https://bingo-fastapi.herokuapp.com/) foi feito no Heroku, onde pode ser acessada a [documentação](https://bingo-fastapi.herokuapp.com/docs) dos endpoints.
+O [deploy oficial](http://bingo-api.com.br) foi feito no Heroku, onde pode ser acessada a [documentação](http://bingo-api.com.br/docs) dos endpoints.
 
 ## Como executar
 
