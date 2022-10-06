@@ -12,5 +12,5 @@ app.include_router(rounds_route.router)
 def home():
     """Welcome message to the API"""
     return {
-        "message": "Let's play! Visit route /card for a random classic card."
+        "message": "Let's play! Visit route /docs for OpenAPI (Swagger) documentation."
     }
