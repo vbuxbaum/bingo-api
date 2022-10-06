@@ -18,7 +18,7 @@ class RoundModel(BaseModel):
     pin: str = Field(default_factory=pin_generator)
     most_recently_picked: Union[int, None] = Field(default=None)
     is_round_over: bool = Field(default=False)
-    joined_players: List[RoundPlayer] = Field(default_factory=set)
+    joined_players: List[RoundPlayer] = Field(default=[])
     numbers_picked: List[int] = Field(default=[])
     numbers_to_pick: List[int] = Field(default=[])
     created_at: datetime = Field(default_factory=datetime.now)
