@@ -22,6 +22,11 @@ def test_cant_instantiate_abs_generator():
         CardGenerator()
 
 
+def test_cant_call_abs_generator_method():
+    with pytest.raises(NotImplementedError):
+        CardGenerator.generate_card()
+
+
 def test_create_classic_card():
     classic_card = ClassicGenerator.generate_card()
     assert isinstance(classic_card, BingoCard)

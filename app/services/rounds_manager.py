@@ -38,13 +38,11 @@ class RoundManager:
         found_round = cls.get_one_by_pin(pin)
         if not found_round:
             return None
-        if found_round["is_round_over"]:
-            return found_round
 
         round_to_join = RoundModel(**found_round)
 
         round_card_generator = CARD_GENERATORS[round_to_join.cards_type]
-        current_cards = set(jp.card for jp in round_to_join.joined_players)
+        current_cards = set(round_to_join.joined_players)
 
         while True:
             player_card = round_card_generator.generate_card()
@@ -71,8 +69,6 @@ class RoundManager:
         found_round = cls.get_one_by_id(id)
         if not found_round:
             return None
-        if found_round["is_round_over"]:
-            return found_round
 
         round = RoundModel(**found_round)
         round.pick_number()
