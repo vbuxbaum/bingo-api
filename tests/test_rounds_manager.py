@@ -54,6 +54,13 @@ def test_join_classic_round(isolated_round_manager):
     assert len(joined_round["joined_players"]) == 1
 
 
+def test_join_inexistent_round_fails(isolated_round_manager):
+    joined_round = isolated_round_manager.join_with_pin(
+        "inexistent_pin", player_name="test player"
+    )
+    assert joined_round is None
+
+
 def test_unique_cards_in_round(isolated_round_manager):
     created_round = isolated_round_manager.create(
         RoundFactory(cards_type="classic")
@@ -75,6 +82,31 @@ def test_pick_number_for_round(isolated_round_manager):
 
     updated_round = isolated_round_manager.pick_number(created_round["_id"])
     assert len(updated_round["numbers_picked"]) == 2
+
+
+def test_pick_numbers_until_round_is_over(isolated_round_manager):
+    created_round = isolated_round_manager.create(RoundFactory())
+    total_numbers = len(created_round["numbers_to_pick"])
+    for _ in range(total_numbers):
+        updated_round = isolated_round_manager.pick_number(
+            created_round["_id"]
+        )
+    last_picked = updated_round["most_recently_picked"]
+    assert last_picked is not None
+    assert len(updated_round["numbers_picked"]) == total_numbers
+    assert len(updated_round["numbers_to_pick"]) == 0
+    assert updated_round["is_round_over"] is True
+
+    ended_round = isolated_round_manager.pick_number(created_round["_id"])
+    assert ended_round["most_recently_picked"] == last_picked
+    assert len(ended_round["numbers_picked"]) == total_numbers
+    assert len(ended_round["numbers_to_pick"]) == 0
+    assert ended_round["is_round_over"] is True
+
+
+def test_pick_number_for_inexistent_round_fails(isolated_round_manager):
+    round_to_pick = isolated_round_manager.pick_number("inexistent_id")
+    assert round_to_pick is None
 
 
 def test_delete_by_id(isolated_round_manager):
