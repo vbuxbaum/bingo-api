@@ -36,6 +36,17 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Run pytest
-        run: python -m pytest
-
+        run: python -m pytest --junitxml=pytest.xml --cov-report=term-missing:skip-covered --cov=app tests/ | tee pytest-coverage.txt
+      - name: Pytest coverage report
+        id: coverageReport
+        uses: MishaKav/pytest-coverage-comment@main
+        with:
+          pytest-coverage-path: ./pytest-coverage.txt
+          junitxml-path: ./pytest.xml
+      - name: Validate high coverage level
+        run: |
+          echo "Coverage Percentage - ${{ steps.coverageReport.outputs.coverage }}"
+          [[ '${{ steps.coverageReport.outputs.color }}' != 'brightgreen' ]] && echo "Coverage needs to be over 90%" && exit 1
+          echo "ok"
+          
 
