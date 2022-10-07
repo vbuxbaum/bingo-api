@@ -38,23 +38,24 @@ jobs:
       - name: Run pytest
         run: python -m pytest --junitxml=pytest.xml --cov-report=term-missing:skip-covered --cov=app tests/ | tee pytest-coverage.txt
       - name: Pytest coverage report
+        id: coverageReport
         uses: MishaKav/pytest-coverage-comment@main
         with:
           pytest-coverage-path: ./pytest-coverage.txt
           junitxml-path: ./pytest.xml
       - name: Validate high coverage level
         run: |
-          echo "Coverage Percantage - ${{ steps.coverageComment.outputs.coverage }}"
-          echo "Coverage Color - ${{ steps.coverageComment.outputs.color }}"
-          echo "Coverage Html - ${{ steps.coverageComment.outputs.coverageHtml }}"
-          echo "Summary Report - ${{ steps.coverageComment.outputs.summaryReport }}"
+          echo "Coverage Percantage - ${{ steps.coverageReport.outputs.coverage }}"
+          echo "Coverage Color - ${{ steps.coverageReport.outputs.color }}"
+          echo "Coverage Html - ${{ steps.coverageReport.outputs.coverageHtml }}"
+          echo "Summary Report - ${{ steps.coverageReport.outputs.summaryReport }}"
 
-          echo "Coverage Warnings - ${{ steps.coverageComment.outputs.warnings }}"
+          echo "Coverage Warnings - ${{ steps.coverageReport.outputs.warnings }}"
 
-          echo "Coverage Errors - ${{ steps.coverageComment.outputs.errors }}"
-          echo "Coverage Failures - ${{ steps.coverageComment.outputs.failures }}"
-          echo "Coverage Skipped - ${{ steps.coverageComment.outputs.skipped }}"
-          echo "Coverage Tests - ${{ steps.coverageComment.outputs.tests }}"
-          echo "Coverage Time - ${{ steps.coverageComment.outputs.time }}"
-          echo "Not Success Test Info - ${{ steps.coverageComment.outputs.notSuccessTestInfo }}"
+          echo "Coverage Errors - ${{ steps.coverageReport.outputs.errors }}"
+          echo "Coverage Failures - ${{ steps.coverageReport.outputs.failures }}"
+          echo "Coverage Skipped - ${{ steps.coverageReport.outputs.skipped }}"
+          echo "Coverage Tests - ${{ steps.coverageReport.outputs.tests }}"
+          echo "Coverage Time - ${{ steps.coverageReport.outputs.time }}"
+          echo "Not Success Test Info - ${{ steps.coverageReport.outputs.notSuccessTestInfo }}"
 
