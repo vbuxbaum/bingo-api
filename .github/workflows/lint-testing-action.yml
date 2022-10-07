@@ -45,7 +45,7 @@ jobs:
           junitxml-path: ./pytest.xml
       - name: Validate high coverage level
         run: |
-          echo "Coverage Percentage - ${{ steps.coverageReport.outputs.coverage }}"
+          echo -e "Coverage Percentage - ${{ steps.coverageReport.outputs.coverage }}"
           echo "Coverage Color - ${{ steps.coverageReport.outputs.color }}"
           [[ ${{ steps.coverageReport.outputs.color }} != 'brightgreen']] && echo "Coverage needs to be over 90%" && exit 1
           
