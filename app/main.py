@@ -10,7 +10,7 @@ app.include_router(rounds_route.router)
 
 @app.get("/")
 def home():
-    """Welcome message to the API"""
+    """Welcome message to the Bingo API"""
     return {
         "message": "Let's play! "
         "Visit route /docs for OpenAPI (Swagger) documentation."
