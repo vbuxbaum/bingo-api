@@ -23,11 +23,11 @@ uvicorn app.main:app --reload
 
 > De forma alternativa ao comando anterior, você pode definir as variáveis de ambiente `PORT=8000` e `DEBUG=--reload` e utilizar o comando `heroku local`
 
-### Configurações de ambiente
+### Configurações de ambiente de teste
 
 É necessário definir a variável de ambiente `MONGODB_URL` no arquivo `.env` com a URL para conexão com o banco de dados
 
-Opcionalmente, você pode definir uma variável `API_TOKEN` para os endpoints de PUT, POST e DELETE. Localmente, o valor padrão é `""`. No ambiente de produção, há um token previamente definido.
+Opcionalmente, você pode definir uma variável `API_TOKEN` para os endpoints https://hackmd.io/9Qw7MoHwQZS36prck_5dag#de PUT, POST e DELETE. Localmente, o valor padrão é `""`. No ambiente de produção, há um token previamente definido.
 
 
 ## Tipos de cartelas
