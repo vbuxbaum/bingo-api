@@ -5,8 +5,12 @@ from app.config import get_settings
 from bson.objectid import ObjectId
 
 
-client = MongoClient(get_settings().mongodb_url)
-db: Database = client['bingo']
+client = MongoClient(
+    get_settings().mongodb_url,
+    connectTimeoutMS=4000,
+    serverSelectionTimeoutMS=4000,
+)
+db: Database = client["bingo"]
 
 
 class PyObjectId(ObjectId):
