@@ -2,9 +2,9 @@ from pymongo.collection import ReturnDocument
 from fastapi.encoders import jsonable_encoder
 from pymongo.results import DeleteResult
 
-from app.models.base_model import db
-from app.models.round_model import RoundModel, RoundPlayer
-from app.services.card_generators import CARD_GENERATORS
+from src.models.base_model import db
+from src.models.round_model import RoundModel, RoundPlayer
+from src.services.card_generators import CARD_GENERATORS
 
 
 class RoundManager:

@@ -1,4 +1,4 @@
-from app.models.base_model import BaseModel
+from src.models.base_model import BaseModel
 import pytest
 
 

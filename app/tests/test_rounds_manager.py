@@ -1,5 +1,5 @@
 import mongomock
-from app.services.rounds_manager import RoundManager
+from src.services.rounds_manager import RoundManager
 from tests.factories.round_factory import RoundFactory
 import pytest
 from hypothesis import given, HealthCheck, settings, strategies as st

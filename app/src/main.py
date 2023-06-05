@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from app.routes import cards_route, rounds_route
+from src.routes import cards_route, rounds_route
 
 app = FastAPI()
 

@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Query, HTTPException, status
 
-from app.models.card_model import BingoCard
-from app.services.card_generators import CARD_GENERATORS
+from src.models.card_model import BingoCard
+from src.services.card_generators import CARD_GENERATORS
 
 router = APIRouter(prefix="/card", tags=["cards"])
 

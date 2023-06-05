@@ -4,7 +4,7 @@ from tests.factories import round_factory
 
 def test_get_current_rounds(client: TestClient, mocker):
     mock_get = mocker.patch(
-        "app.services.rounds_manager.RoundManager.get_many"
+        "src.services.rounds_manager.RoundManager.get_many"
     )
     mock_get.return_value = [round_factory.RoundFactory()]
     client.get("/rounds")
@@ -13,7 +13,7 @@ def test_get_current_rounds(client: TestClient, mocker):
 
 def test_get_round_by_id(client: TestClient, mocker):
     mock_get = mocker.patch(
-        "app.services.rounds_manager.RoundManager.get_one_by_id"
+        "src.services.rounds_manager.RoundManager.get_one_by_id"
     )
     mock_get.return_value = round_factory.RoundFactory()
     id_str = "g41ui24kg123b"
