@@ -1,7 +1,7 @@
 from pymongo.database import Database
 from pymongo import MongoClient
 import pydantic
-from app.config import get_settings
+from src.config import get_settings
 from bson.objectid import ObjectId
 
 

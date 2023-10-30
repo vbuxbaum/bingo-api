@@ -3,7 +3,7 @@ import random
 from typing import Type
 from frozendict import frozendict
 
-from app.models.card_model import BingoCard, CardValues
+from src.models.card_model import BingoCard, CardValues
 
 
 class CardGenerator(ABC):

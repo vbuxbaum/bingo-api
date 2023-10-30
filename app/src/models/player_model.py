@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from app.models.card_model import BingoCard
+from src.models.card_model import BingoCard
 
 
 class RoundPlayer(BaseModel):

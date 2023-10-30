@@ -1,4 +1,4 @@
-from app.services import authentication
+from src.services import authentication
 
 
 def test_token_validation(mocker, monkeypatch):

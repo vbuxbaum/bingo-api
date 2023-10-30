@@ -1,4 +1,4 @@
-from app.config import get_settings
+from src.config import get_settings
 
 
 def validate_token(token: str):

@@ -1,8 +1,8 @@
 from typing import List
 from fastapi import APIRouter, Body, Depends, HTTPException, Query, status
-from app.models.round_model import RoundModel
-from app.services.rounds_manager import RoundManager
-from app.services.authentication import validate_token
+from src.models.round_model import RoundModel
+from src.services.rounds_manager import RoundManager
+from src.services.authentication import validate_token
 
 router = APIRouter(prefix="/rounds", tags=["rounds"])
 
