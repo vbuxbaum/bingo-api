@@ -36,7 +36,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Run pytest
-        run: python -m pytest --junitxml=pytest.xml --cov-report=term-missing:skip-covered --cov=app tests/ | tee pytest-coverage.txt
+        run: docker-compose run --rm app sh -c "python -m pytest --junitxml=pytest.xml --cov-report=term-missing:skip-covered --cov=app tests/"
       - name: Pytest coverage report
         id: coverageReport
         uses: MishaKav/pytest-coverage-comment@main
