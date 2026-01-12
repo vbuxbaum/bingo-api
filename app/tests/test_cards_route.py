@@ -1,6 +1,6 @@
 from hypothesis import given
 import hypothesis.strategies as st
-from app.services.card_generators import CARD_GENERATORS
+from src.services.card_generators import CARD_GENERATORS
 from fastapi.testclient import TestClient
 
 

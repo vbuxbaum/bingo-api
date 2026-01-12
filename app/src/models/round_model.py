@@ -4,8 +4,8 @@ from typing import List, Union
 from bson.objectid import ObjectId
 from pydantic import Field
 
-from app.models.base_model import BaseModel
-from app.models.player_model import RoundPlayer
+from src.models.base_model import BaseModel
+from src.models.player_model import RoundPlayer
 
 
 def pin_generator() -> str:

@@ -1,0 +1,186 @@
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 32B done
+#1 DONE 0.0s
+
+#2 [internal] load .dockerignore
+#2 transferring context: 2B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.9-alpine3.13
+#3 DONE 1.5s
+
+#4 [1/6] FROM docker.io/library/python:3.9-alpine3.13@sha256:a7cbd1e7784a35a098cedbc8681b790d35ff6030a5e13f043185e2465003a040
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 5.86kB 0.0s done
+#5 DONE 0.0s
+
+#6 [2/6] COPY ./requirements.txt /tmp/requirements.txt
+#6 CACHED
+
+#7 [3/6] COPY ./dev-requirements.txt /tmp/dev-requirements.txt
+#7 CACHED
+
+#8 [4/6] COPY ./app /app
+#8 CACHED
+
+#9 [5/6] WORKDIR /app
+#9 CACHED
+
+#10 [6/6] RUN python -m venv /py &&     apk --no-cache add curl &&     curl --proto "=https" --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y &&     /py/bin/pip install --upgrade pip setuptools wheel &&     /py/bin/pip install -r /tmp/requirements.txt &&     if [ true = "true" ];         then /py/bin/pip install -r /tmp/dev-requirements.txt ;     fi &&     rm -rf /tmp &&     adduser         --disabled-password         fastapi-user
+#10 2.493 fetch https://dl-cdn.alpinelinux.org/alpine/v3.13/main/aarch64/APKINDEX.tar.gz
+#10 2.975 fetch https://dl-cdn.alpinelinux.org/alpine/v3.13/community/aarch64/APKINDEX.tar.gz
+#10 3.571 (1/4) Installing brotli-libs (1.0.9-r3)
+#10 3.607 (2/4) Installing nghttp2-libs (1.42.0-r1)
+#10 3.641 (3/4) Installing libcurl (7.79.1-r3)
+#10 3.680 (4/4) Installing curl (7.79.1-r3)
+#10 3.718 Executing busybox-1.32.1-r7.trigger
+#10 3.732 OK: 16 MiB in 40 packages
+#10 4.063 info: downloading installer
+#10 5.119 info: profile set to 'default'
+#10 5.119 info: default host triple is aarch64-unknown-linux-musl
+#10 5.119 info: syncing channel updates for 'stable-aarch64-unknown-linux-musl'
+#10 5.439 info: latest update on 2023-06-01, rust version 1.70.0 (90c541806 2023-05-31)
+#10 5.439 info: downloading component 'cargo'
+#10 5.767 info: downloading component 'clippy'
+#10 5.947 info: downloading component 'rust-docs'
+#10 6.383 info: downloading component 'rust-std'
+#10 7.300 info: downloading component 'rustc'
+#10 9.606 info: downloading component 'rustfmt'
+#10 9.759 info: installing component 'cargo'
+#10 10.27 info: installing component 'clippy'
+#10 10.52 info: installing component 'rust-docs'
+#10 12.90 info: installing component 'rust-std'
+#10 14.74 info: installing component 'rustc'
+#10 20.11 info: installing component 'rustfmt'
+#10 20.47 info: default toolchain set to 'stable-aarch64-unknown-linux-musl'
+#10 20.47 
+#10 20.49   stable-aarch64-unknown-linux-musl installed - (error reading rustc version)
+#10 20.49 
+#10 20.50 
+#10 20.50 Rust is installed now. Great!
+#10 20.50 
+#10 20.50 To get started you may need to restart your current shell.
+#10 20.50 This would reload your PATH environment variable to include
+#10 20.50 Cargo's bin directory ($HOME/.cargo/bin).
+#10 20.50 
+#10 20.50 To configure your current shell, run:
+#10 20.50 source "$HOME/.cargo/env"
+#10 20.71 Requirement already satisfied: pip in /py/lib/python3.9/site-packages (21.2.4)
+#10 20.92 Collecting pip
+#10 21.10   Downloading pip-23.1.2-py3-none-any.whl (2.1 MB)
+#10 21.34 Requirement already satisfied: setuptools in /py/lib/python3.9/site-packages (58.1.0)
+#10 21.60 Collecting setuptools
+#10 21.88   Downloading setuptools-67.8.0-py3-none-any.whl (1.1 MB)
+#10 22.12 Collecting wheel
+#10 22.26   Downloading wheel-0.40.0-py3-none-any.whl (64 kB)
+#10 22.35 Installing collected packages: wheel, setuptools, pip
+#10 22.38   Attempting uninstall: setuptools
+#10 22.38     Found existing installation: setuptools 58.1.0
+#10 22.40     Uninstalling setuptools-58.1.0:
+#10 22.41       Successfully uninstalled setuptools-58.1.0
+#10 22.74   Attempting uninstall: pip
+#10 22.74     Found existing installation: pip 21.2.4
+#10 22.81     Uninstalling pip-21.2.4:
+#10 22.81       Successfully uninstalled pip-21.2.4
+#10 23.58 Successfully installed pip-23.1.2 setuptools-67.8.0 wheel-0.40.0
+#10 24.64 Collecting anyio==3.6.1 (from -r /tmp/requirements.txt (line 1))
+#10 24.79   Downloading anyio-3.6.1-py3-none-any.whl (80 kB)
+#10 24.83      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 80.6/80.6 kB 2.1 MB/s eta 0:00:00
+#10 24.87 Collecting asgiref==3.5.2 (from -r /tmp/requirements.txt (line 2))
+#10 24.91   Downloading asgiref-3.5.2-py3-none-any.whl (22 kB)
+#10 25.07 Collecting black==22.3.0 (from -r /tmp/requirements.txt (line 3))
+#10 25.11   Downloading black-22.3.0-py3-none-any.whl (153 kB)
+#10 25.14      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 153.9/153.9 kB 4.7 MB/s eta 0:00:00
+#10 25.18 Collecting certifi==2022.5.18.1 (from -r /tmp/requirements.txt (line 4))
+#10 25.21   Downloading certifi-2022.5.18.1-py3-none-any.whl (155 kB)
+#10 25.22      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 155.2/155.2 kB 19.8 MB/s eta 0:00:00
+#10 25.40 Collecting charset-normalizer==2.0.12 (from -r /tmp/requirements.txt (line 5))
+#10 25.43   Downloading charset_normalizer-2.0.12-py3-none-any.whl (39 kB)
+#10 25.48 Collecting click==8.1.3 (from -r /tmp/requirements.txt (line 6))
+#10 25.53   Downloading click-8.1.3-py3-none-any.whl (96 kB)
+#10 25.53      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 96.6/96.6 kB 28.7 MB/s eta 0:00:00
+#10 25.58 Collecting dnspython==2.2.1 (from -r /tmp/requirements.txt (line 7))
+#10 25.61   Downloading dnspython-2.2.1-py3-none-any.whl (269 kB)
+#10 25.62      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 269.1/269.1 kB 18.1 MB/s eta 0:00:00
+#10 25.66 Collecting email-validator==1.2.1 (from -r /tmp/requirements.txt (line 8))
+#10 25.69   Downloading email_validator-1.2.1-py2.py3-none-any.whl (22 kB)
+#10 25.76 Collecting fastapi==0.78.0 (from -r /tmp/requirements.txt (line 9))
+#10 25.79   Downloading fastapi-0.78.0-py3-none-any.whl (54 kB)
+#10 25.80      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 54.6/54.6 kB 18.3 MB/s eta 0:00:00
+#10 25.85 Collecting flake8==4.0.1 (from -r /tmp/requirements.txt (line 10))
+#10 25.88   Downloading flake8-4.0.1-py2.py3-none-any.whl (64 kB)
+#10 25.88      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 64.1/64.1 kB 25.3 MB/s eta 0:00:00
+#10 25.94 Collecting frozendict==2.3.4 (from -r /tmp/requirements.txt (line 11))
+#10 25.97   Downloading frozendict-2.3.4-py3-none-any.whl (11 kB)
+#10 26.02 Collecting gunicorn==20.1.0 (from -r /tmp/requirements.txt (line 12))
+#10 26.05   Downloading gunicorn-20.1.0-py3-none-any.whl (79 kB)
+#10 26.05      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 79.5/79.5 kB 30.9 MB/s eta 0:00:00
+#10 26.10 Collecting h11==0.13.0 (from -r /tmp/requirements.txt (line 13))
+#10 26.13   Downloading h11-0.13.0-py3-none-any.whl (58 kB)
+#10 26.13      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 58.2/58.2 kB 19.4 MB/s eta 0:00:00
+#10 26.18 Collecting httptools==0.4.0 (from -r /tmp/requirements.txt (line 14))
+#10 26.21   Downloading httptools-0.4.0-cp39-cp39-musllinux_1_1_aarch64.whl (430 kB)
+#10 26.24      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 430.2/430.2 kB 18.5 MB/s eta 0:00:00
+#10 26.28 Collecting idna==3.3 (from -r /tmp/requirements.txt (line 15))
+#10 26.31   Downloading idna-3.3-py3-none-any.whl (61 kB)
+#10 26.31      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 61.2/61.2 kB 19.3 MB/s eta 0:00:00
+#10 26.35 Collecting itsdangerous==2.1.2 (from -r /tmp/requirements.txt (line 16))
+#10 26.38   Downloading itsdangerous-2.1.2-py3-none-any.whl (15 kB)
+#10 26.43 Collecting Jinja2==3.1.2 (from -r /tmp/requirements.txt (line 17))
+#10 26.46   Downloading Jinja2-3.1.2-py3-none-any.whl (133 kB)
+#10 26.47      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 133.1/133.1 kB 17.1 MB/s eta 0:00:00
+#10 26.53 Collecting MarkupSafe==2.1.1 (from -r /tmp/requirements.txt (line 18))
+#10 26.56   Downloading MarkupSafe-2.1.1-cp39-cp39-musllinux_1_1_aarch64.whl (30 kB)
+#10 26.60 Collecting mccabe==0.6.1 (from -r /tmp/requirements.txt (line 19))
+#10 26.63   Downloading mccabe-0.6.1-py2.py3-none-any.whl (8.6 kB)
+#10 26.68 Collecting motor==3.0.0 (from -r /tmp/requirements.txt (line 20))
+#10 26.72   Downloading motor-3.0.0-py3-none-any.whl (56 kB)
+#10 26.72      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 56.1/56.1 kB 12.0 MB/s eta 0:00:00
+#10 26.76 Collecting mypy-extensions==0.4.3 (from -r /tmp/requirements.txt (line 21))
+#10 26.79   Downloading mypy_extensions-0.4.3-py2.py3-none-any.whl (4.5 kB)
+#10 26.99 Collecting orjson==3.7.2 (from -r /tmp/requirements.txt (line 22))
+#10 27.01   Downloading orjson-3.7.2.tar.gz (639 kB)
+#10 27.04      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 639.7/639.7 kB 31.5 MB/s eta 0:00:00
+#10 27.12   Installing build dependencies: started
+#10 28.57   Installing build dependencies: finished with status 'done'
+#10 28.57   Getting requirements to build wheel: started
+#10 28.61   Getting requirements to build wheel: finished with status 'done'
+#10 28.61   Preparing metadata (pyproject.toml): started
+#10 28.64   Preparing metadata (pyproject.toml): finished with status 'error'
+#10 28.65   error: subprocess-exited-with-error
+#10 28.65   
+#10 28.65   × Preparing metadata (pyproject.toml) did not run successfully.
+#10 28.65   │ exit code: 1
+#10 28.65   ╰─> [6 lines of output]
+#10 28.65       Checking for Rust toolchain....
+#10 28.65       
+#10 28.65       Cargo, the Rust package manager, is not installed or is not on PATH.
+#10 28.65       This package requires Rust and Cargo to compile extensions. Install it through
+#10 28.65       the system's package manager or via https://rustup.rs/
+#10 28.65       
+#10 28.65       [end of output]
+#10 28.65   
+#10 28.65   note: This error originates from a subprocess, and is likely not a problem with pip.
+#10 28.65 error: metadata-generation-failed
+#10 28.65 
+#10 28.65 × Encountered error while generating package metadata.
+#10 28.65 ╰─> See above for output.
+#10 28.65 
+#10 28.65 note: This is an issue with the package mentioned above, not pip.
+#10 28.65 hint: See above for details.
+#10 ERROR: executor failed running [/bin/sh -c python -m venv /py &&     apk --no-cache add curl &&     curl --proto "=https" --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y &&     /py/bin/pip install --upgrade pip setuptools wheel &&     /py/bin/pip install -r /tmp/requirements.txt &&     if [ $DEV = "true" ];         then /py/bin/pip install -r /tmp/dev-requirements.txt ;     fi &&     rm -rf /tmp &&     adduser         --disabled-password         fastapi-user]: exit code: 1
+------
+ > [6/6] RUN python -m venv /py &&     apk --no-cache add curl &&     curl --proto "=https" --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y &&     /py/bin/pip install --upgrade pip setuptools wheel &&     /py/bin/pip install -r /tmp/requirements.txt &&     if [ true = "true" ];         then /py/bin/pip install -r /tmp/dev-requirements.txt ;     fi &&     rm -rf /tmp &&     adduser         --disabled-password         fastapi-user:
+#10 28.65       [end of output]
+#10 28.65   
+#10 28.65   note: This error originates from a subprocess, and is likely not a problem with pip.
+#10 28.65 error: metadata-generation-failed
+#10 28.65 
+#10 28.65 × Encountered error while generating package metadata.
+#10 28.65 ╰─> See above for output.
+#10 28.65 
+#10 28.65 note: This is an issue with the package mentioned above, not pip.
+#10 28.65 hint: See above for details.
+------

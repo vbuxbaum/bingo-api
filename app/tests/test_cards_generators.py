@@ -1,10 +1,10 @@
-from app.services.card_generators import (
+from src.services.card_generators import (
     CardGenerator,
     ClassicGenerator,
     NSquareDiagGenerator,
     NSquareGenerator,
 )
-from app.models.card_model import BingoCard
+from src.models.card_model import BingoCard
 from hypothesis import given, strategies as st
 import pytest
 

@@ -1,5 +1,5 @@
-from app.models import card_model
-from app.services import card_generators
+from src.models import card_model
+from src.services import card_generators
 
 
 def test_compare_equal_cards():
